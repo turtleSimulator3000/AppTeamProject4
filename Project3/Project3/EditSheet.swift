@@ -13,7 +13,6 @@ struct EditSheet: View {
     @Binding var editing: Bool
     var body: some View {
         VStack(spacing: 20) {
-                // TODO: Add list.bullet.circle.fill icon and TextField
             Image(systemName: "list.bullet.circle.fill").font(.system(size: 200))
             
             TextField("List name", text: $name).font(.system(size: 30)).onSubmit{

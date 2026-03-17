@@ -9,11 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isEditing: Bool = false
-    // TODO: Add an @State property to hold a RemindersPage struct
     @State private var page: RemindersPage = RemindersPage( title: "Title", items: [Reminder(title: "Enter text", isCompleted: false)], color: Color.red)
     
     var body: some View {
-        VStack(alignment: .leading) {
+        NavigationStack() {
             HStack{
                 Text(page.title).font(.system(size: 50)).padding()
                 
@@ -29,9 +28,9 @@ struct ContentView: View {
             
             
             List {
-                // TODO: Loop through the page's reminders using ForEach
+                
                 ForEach($page.items) { $reminder in
-                    ModelView(colorType: page.color)
+                    ModelView(edit: $isEditing, colorType: $page.color, pageName: $page.title)
                 }
                 .onDelete { indexSet in
                     page.items.remove(atOffsets: indexSet)
@@ -48,7 +47,6 @@ struct ContentView: View {
 
         }.foregroundStyle(page.color)
         .sheet(isPresented: $isEditing) {
-            // TODO: Add remaining binding
             
             EditSheet(selectedColor: $page.color, name:$page.title, editing: $isEditing)
         }

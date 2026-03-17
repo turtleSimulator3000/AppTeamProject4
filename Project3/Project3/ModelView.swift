@@ -11,8 +11,12 @@ struct ModelView: View {
 
     @State private var imageName: String = "circle"
     @State private var name: String = ""
+    @State private var desc: String = ""
+    @State private var date = Date()
     @State private var opa: Double = 1
-    var colorType : Color
+    @Binding var edit: Bool
+    @Binding var colorType : Color
+    @Binding var pageName : String
     var body: some View {
         HStack(){
             
@@ -31,11 +35,22 @@ struct ModelView: View {
                     .font(.title) // Increase size
             }.padding()
             
-            TextField("Note Something", text: $name).font(.system(size: 30))
+            TextField("Note Something", text: $name).font(.system(size: 30)).frame(maxWidth: .infinity)
+            
+            Text(date, style: .relative)
+            
+            NavigationLink {
+                ReminderDetailView(name:$name, desc:$desc, date:$date, edit:$edit,
+                                   color: $colorType,
+                                pageName: $pageName
+                               )
+                               } label: {
+                                   Text("")
+                                 }
         }.foregroundStyle(colorType).opacity(opa)
     }
 }
 
 #Preview {
-    ModelView(colorType: Color.red)
+    //ModelView(colorType: Color.red)
 }
